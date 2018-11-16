@@ -1,0 +1,62 @@
+extends pure-layout.pug
+
+block content
+    div(class='pure-g')
+        div( class='pure-u-1')
+            h1 Landing Page
+
+            section(id='main-content')
+                <!-- form -->
+                form(
+                    id='base-form' 
+                    class='pure-form pure-form-stacked'
+                    action='/validate'
+                    method='post'
+                )
+                    fieldset
+                        div(class='pure-control-group')
+                            label(for='linktocheck') Link to check for
+                            input(
+                                id='linktocheck'
+                                type='text'
+                                name='linktocheck'
+                                placeholder='https:///google.de'
+                            )
+                        div(class='pure-control-group')
+                            label(for='sitetocheck') Site to check on
+                            input(
+                                id='sitetocheck'
+                                type='text'
+                                name='sitetocheck'
+                                placeholder='https://bing.de'
+                            )
+                        div(class='pure-controls')
+                            label(for='userconfirmation' class='pure-checkbox')
+                                input(
+                                    id='userconfirmation'
+                                    type='checkbox'
+                                )
+                                span  I've read the terms and conditions.
+                            button(
+                                type="submit"
+                                class="pure-button pure-button-primary"
+                            ) Check now
+                
+                if pageTitle
+                    section(id='crawlerResultSection')
+                        span(class='d-block fs__40') Result
+                        span(class='d-block fs__10')= pageTitle
+                        if hasLink
+                            i(class='fas fa-check fa-5x')
+                        if !hasLink
+                            i(class='fas fa-times fa-5x')
+
+
+                if links
+                    div(id='absoluteLinkUrlSection')
+                        h2= links.length + ' Links found on ' + pageTitle
+                        ul
+                            each link in links
+                                li
+                                    i(class='fas fa-link fa-2x')
+                                    = link
