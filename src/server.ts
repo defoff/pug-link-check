@@ -5,6 +5,7 @@ import * as request from 'request';
 import * as cheerio from 'cheerio';
 import * as URL from 'url-parse';
 import { Validator } from './validator';
+import * as helmet from 'helmet';
 
 class Server {
     public server: express.Application;
@@ -14,6 +15,8 @@ class Server {
         this.routes();
     }
     public init(): void {
+        // secure headers with helmet defaults
+        this.server.use(helmet());
         // mount public folder for assets
         this.server.use(express.static('public'));
         // set view engine and template directory
@@ -24,6 +27,7 @@ class Server {
         
     }
     public routes(): void {
+
         /**
          * example route
          */
