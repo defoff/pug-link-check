@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
-    "start-dist": "node ./dist/src/index.js",
+    "start-dist": "node ./dist/index.js",
     "test": "./node_modules/.bin/mocha --compilers ts:ts-node/register ./test/*.spec.ts",
     "test-watch": "nodemon --exec npm test",
     "build": "npm run build-ts",
