@@ -1,5 +1,7 @@
 import * as request from 'request';
 import * as cheerio from 'cheerio';
+import * as isUrl from '../node_modules/is-url';
+
 class Validator {
 
     public _ltc: String;
@@ -14,38 +16,38 @@ class Validator {
         this._stc = stc;
         this._allRelativeLinks = [];
         this._allAbsoluteLinks = [];
-        console.log(this._stc);
-        // this.collectInternalLinks(this._$);
-        this.requestUrl();
     }
 
-    requestUrl() {
+    requestUrl(): Promise<any> {
         let rt = this;
-        let dataPromise = new Promise((resolve, reject) => {
-            request(this._stc.toString(), (error, response, body) => {
-                if (error) {
-                    reject('Error: ' + error);
-                }
-                if (response.statusCode === 200) {
-                    //parse the document
-                    let $ = cheerio.load(body);
-                    //pick all internal links
-                    this.collectInternalLinks($);
-                    //pick page title of browsed page
-                    const pageTitle = $('title').text();
-                    let hasLink = rt.findLink();
-                    //construct result object
-                    let crawlerResult = {
-                        'pageTitle': pageTitle,
-                        'hasLink': hasLink,
-                        'links': this._allAbsoluteLinks
+        return new Promise((resolve, reject) => {
+            if (isUrl(this._stc)) {
+                request(this._stc.toString(), (error, response, body) => {
+                    if (error) {
+                        reject(new Error(error));
                     }
-                    console.log(hasLink);
-                    resolve(crawlerResult);
-                }
-            });        
-        });
-        return dataPromise; 
+                    if (response.statusCode === 200) {
+                        //parse the document
+                        let $ = cheerio.load(body);
+                        //pick all internal links
+                        this.collectInternalLinks($);
+                        //pick page title of browsed page
+                        const pageTitle = $('title').text();
+                        let hasLink = rt.findLink();
+                        //construct result object
+                        let crawlerResult = {
+                            'pageTitle': pageTitle,
+                            'hasLink': hasLink,
+                            'links': this._allAbsoluteLinks
+                        }
+                        console.log(hasLink);
+                        resolve(crawlerResult);
+                    }
+                });   
+            } else {
+                reject(new Error('nope'));
+            }
+        }).catch(error => { console.log('caught', error.message); });
     }
 
     collectInternalLinks($) {    
