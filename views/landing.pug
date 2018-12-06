@@ -3,7 +3,7 @@ extends pure-layout.pug
 block content
     div(class='pure-g')
         div( class='pure-u-1')
-            h1 Landing Page
+            h1 Pug Link Check
 
             section(id='main-content')
                 <!-- form -->
@@ -20,16 +20,22 @@ block content
                                 id='linktocheck'
                                 type='text'
                                 name='linktocheck'
-                                placeholder='https:///google.de'
+                                placeholder='https:///google.de',
+                                value=ltc
                             )
+                            if !userLtc
+                                span not a valid link
                         div(class='pure-control-group')
                             label(for='sitetocheck') Site to check on
                             input(
                                 id='sitetocheck'
                                 type='text'
                                 name='sitetocheck'
-                                placeholder='https://bing.de'
+                                placeholder='https://bing.de',
+                                value=stc
                             )
+                            if !userStc
+                                span not a valid link
                         div(class='pure-controls')
                             label(for='userconfirmation' class='pure-checkbox')
                                 input(
@@ -60,3 +66,11 @@ block content
                                 li
                                     i(class='fas fa-link fa-2x')
                                     = link
+                
+                if lastQueries
+                    div
+                        ul
+                            each query in lastQueries
+                                li
+                                    i(class='fas fa-link fa-2x')
+                                    = 'Link: ' + query.linkToCheck + ' checked on ' + query.siteToCheck

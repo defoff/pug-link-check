@@ -2,6 +2,8 @@ import * as request from 'request';
 import * as cheerio from 'cheerio';
 import * as isUrl from '../node_modules/is-url';
 
+import CheckProcessModel from './models/check-process';
+
 class Validator {
 
     public _ltc: String;
@@ -21,33 +23,39 @@ class Validator {
     requestUrl(): Promise<any> {
         let rt = this;
         return new Promise((resolve, reject) => {
-            if (isUrl(this._stc)) {
+            if (isUrl(this._stc) && isUrl(this._ltc)) {
                 request(this._stc.toString(), (error, response, body) => {
                     if (error) {
                         reject(new Error(error));
                     }
                     if (response.statusCode === 200) {
-                        //parse the document
+                        new CheckProcessModel({
+                            siteToCheck: this._stc,
+                            linkToCheck: this._ltc
+                        }).save();                  
                         let $ = cheerio.load(body);
-                        //pick all internal links
                         this.collectInternalLinks($);
-                        //pick page title of browsed page
                         const pageTitle = $('title').text();
                         let hasLink = rt.findLink();
-                        //construct result object
                         let crawlerResult = {
                             'pageTitle': pageTitle,
                             'hasLink': hasLink,
                             'links': this._allAbsoluteLinks
                         }
-                        console.log(hasLink);
                         resolve(crawlerResult);
                     }
                 });   
             } else {
-                reject(new Error('nope'));
+                let err = {
+                    'type': 'validation-error',
+                    'userLtc': isUrl(this._ltc),
+                    'userStc': isUrl(this._stc),
+                    'ltc': this._ltc,
+                    'stc': this._stc
+                }
+                reject(err);
             }
-        }).catch(error => { console.log('caught', error.message); });
+        });
     }
 
     collectInternalLinks($) {    
