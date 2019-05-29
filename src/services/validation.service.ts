@@ -1,8 +1,8 @@
 import * as request from 'request';
 import * as cheerio from 'cheerio';
-import * as isUrl from '../node_modules/is-url';
+import * as isUrl from '../../node_modules/is-url';
 
-import CheckProcessModel from './models/check-process';
+import CheckProcessModel from '../models/check-process.model';
 
 class Validator {
 
