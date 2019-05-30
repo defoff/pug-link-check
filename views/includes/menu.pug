@@ -1,0 +1,22 @@
+div(id="navbarMenuContainer" class="container-fluid px-0")
+    nav(class='navbar navbar-expand-md navbar-light bg-light')
+        a(class='d-block d-sm-block d-md-none' href='/')
+            img(src='/img/cropped-logo-getraenke-news-1.jpg' id='site-logo' class='img-fluid' alt="Site Logo")
+        button(class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+            span(class='navbar-toggler-icon')
+        div(class='collapse navbar-collapse' id='navbarSupportedContent')
+            if isAuthenticated
+                ul(class='navbar-nav mr-auto')
+                    li(class='nav-item')
+                        a(class='nav-link' href='/users/dashboard') Dashboard
+                    if isAdmin
+                        li(class='nav-item')
+                            a(class='nav-link' href='/admin/users/users-list') All users
+                    li(class='nav-item')
+                        a(class='nav-link' href='/users/logout') Logout
+            if !isAuthenticated
+                ul(class='navbar-nav mr-auto')
+                    li(class='nav-item')
+                        a(class='nav-link' href='/users/login') Login
+                    li(class='nav-item')
+                        a(class='nav-link' href='/users/signup') Signup 

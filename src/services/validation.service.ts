@@ -2,7 +2,8 @@ import * as request from 'request';
 import * as cheerio from 'cheerio';
 import * as isUrl from '../../node_modules/is-url';
 
-import CheckProcessModel from '../models/check-process.model';
+import checkProcessModel from '../models/check-process.model';
+import CheckProcess from '../interfaces/check-process.interface';
 
 class Validator {
 
@@ -29,7 +30,7 @@ class Validator {
                         reject(new Error(error));
                     }
                     if (response.statusCode === 200) {
-                        new CheckProcessModel({
+                        new checkProcessModel({
                             siteToCheck: this._stc,
                             linkToCheck: this._ltc
                         }).save();                  

@@ -1,11 +1,11 @@
-import { Schema } from "mongoose";
-import mongoose from "../database/mongoose";
+import * as mongoose from 'mongoose';
+import CheckProcess from '../interfaces/check-process.interface';
 
-let checkProcessSchema = new Schema({
+let checkProcessSchema = new mongoose.Schema({
     siteToCheck: String,
     linkToCheck: String
 });
 
-let CheckProcessModel = mongoose.model('CheckProcess', checkProcessSchema);
+const checkProcessModel = mongoose.model<CheckProcess & mongoose.Document>('CheckProcess', checkProcessSchema);
 
-export default CheckProcessModel;
+export default checkProcessModel;

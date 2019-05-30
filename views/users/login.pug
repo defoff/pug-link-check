@@ -1,0 +1,23 @@
+extends ../layout.pug
+block content
+  div(class='container py-3')
+    div(class='row')
+        div(class='col-sm-12')
+            h1 Anmelden
+    
+        if (flashMessage.length > 0)
+            div(class='col-sm-12 py-3')
+                div(class="alert alert-danger")= flashMessage
+
+    div(class='row')
+        div(class='col-sm-12')
+            form(method='post' action='/users/login/')
+                div(class='form-group')
+                    label(for='inputEmail') Name
+                    input(type='text' class='form-control' id='inputEmail' name='email')
+                
+                div(class='form-group')
+                    label(for='inputPassword') Passwort
+                    input(type='password' class='form-control' id='inputPassword' name='password')
+
+                button(type='submit' class='btn btn-primary-red') Anmelden
