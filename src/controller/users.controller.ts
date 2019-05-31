@@ -6,8 +6,7 @@ import User from '../interfaces/user.interface';
 import * as express from 'express';
 import * as passport from 'passport';
 import * as flash from 'connect-flash/lib';
-import { urlencoded } from 'body-parser';
-import { isLoggedIn, isAdmin } from '../guards/auth.guard';
+import { isLoggedIn, isLoggInAsAdmin } from '../guards/auth.guard';
 
 
 class UserController implements Controller {
@@ -35,15 +34,10 @@ class UserController implements Controller {
         // =====================================
         this.router.get(`${this.path}/login/`, this.renderLoginPage);
         this.router.post(`${this.path}/login/`, passport.authenticate('local-login', {
-            successRedirect : '/users/dashboard', // redirect to the secure profile section
+            successRedirect : '/dashboard', // redirect to the secure profile section
             failureRedirect : '/users/login/', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
-
-        // =====================================
-        // DASHBOARD ===========================
-        // =====================================
-        this.router.get(`${this.path}/dashboard/`, isLoggedIn, this.renderDashboardPage);
 
         // =====================================
         // LOGOUT ==============================
@@ -75,21 +69,6 @@ class UserController implements Controller {
                 isAdmin: request.user && request.user.role === 'admin' ? true : false,
                 username: request.user ? request.user.email : '',
                 flashMessage: request.flash('signupMessage')
-            }
-        );
-    }
-
-    private renderDashboardPage = (request: flash.Request, response: express.Response) => {
-        let isAdmin = false;
-        if(request.user) {
-            isAdmin = request.user.role === 'admin' ? true : false;
-        }
-        response.render('users/dashboard',
-            {
-                title: 'Dashboard',
-                isAuthenticated: request.user ? true : false,
-                isAdmin: isAdmin,
-                username: request.user ? request.user.email : '',               
             }
         );
     }

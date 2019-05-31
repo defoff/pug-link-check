@@ -7,7 +7,7 @@ import * as express from 'express';
 import * as passport from 'passport';
 import * as flash from 'connect-flash/lib';
 import { urlencoded } from 'body-parser';
-import { isLoggedIn, isAdmin } from '../guards/auth.guard';
+import { isLoggedIn, isLoggInAsAdmin } from '../guards/auth.guard';
 
 class AdminUserController implements Controller {
     public path = '/admin/users';
@@ -22,7 +22,7 @@ class AdminUserController implements Controller {
         // =====================================
         // ADMIN: ALL USers=====================
         // =====================================
-        this.router.get(`${this.path}/users-list/`, isAdmin, this.renderUsersList);
+        this.router.get(`${this.path}/users-list/`, isLoggInAsAdmin, this.renderUsersList);
     }
 
     private renderUsersList = (request: flash.Request, response: express.Response) => {

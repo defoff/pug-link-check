@@ -1,0 +1,29 @@
+extends ../layout.pug
+block content
+    div(class='container py-3')
+        div(class='row')
+            div(class='col-sm-12')
+                h1 Create a new process item
+        
+            if (flashMessageInfo.length > 0)
+                div(class='col-sm-12 py-3')
+                    div(class="alert alert-danger")= flashMessageInfo
+
+        div(class='row')
+            div(class='col-sm-12')
+                form(method='post' action='/admin/process-items/add')
+                    div(class='form-group')
+                        label(for='inputTargetUrl') Target Url
+                        input(type='text' class=!validTargetUrl ? 'form-control' : 'form-control is-invalid' id='inputTargetUrl' name='targetUrl' value=targetUrl)
+                        div(class='invalid-feedback')
+                            if (flashMessageTargetUrl.length > 0)
+                                p= flashMessageTargetUrl
+                    
+                    div(class='form-group')
+                        label(for='inputNumberLinksToSet') Number of links to set (1-100)
+                        input(type='number' class=!validLinksToSet ? 'form-control' : 'form-control is-invalid' id='inputNumberLinksToSet' name='linksToSet' min='1' max='100' value=linksToSet)
+                        div(class='invalid-feedback')
+                            if (flashMessageLinksToSet.length > 0)
+                                p= flashMessageLinksToSet
+                          
+                    button(type='submit' class='btn btn-primary-red') Create

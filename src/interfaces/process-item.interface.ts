@@ -3,8 +3,8 @@ interface ProcessItem {
     creationDate: Date;
     editDates: Date[];
     editDate: Date;
-    editingUsers: string[];
-    editingUser: string;
+    editUsers: string[];
+    editUser: string;
     submissionDate: Date;
     submissionUser: string;
 

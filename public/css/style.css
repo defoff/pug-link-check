@@ -1,14 +1,4 @@
-/*
-Theme Name: Drinks Fluid
-Author: Rolf Koch
-Description: Individual theme for getraenke-news.de
-Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: drinksfluid
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-*/
+body { background: crimson; }
 
 @media (max-width: 575.98px) {}
 @media (min-width: 576px) and (max-width: 767.98px) {}
@@ -16,76 +6,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
 @media (min-width: 992px) and (max-width: 1199.98px) {}
 @media (min-width: 1200px) {}
 
-#loading { width: 100%; height: 100%; top: 0; left: 0; position: fixed; display: block; background-color: rgba(255,255,255,1); z-index: 99; padding-top: 200px; }
-.loader {
-    margin-top: 80px;
-    display: inline-block;
-    border: 16px solid white;
-    border-top: 16px solid  rgb(187,0,0);
-    border-bottom: 16px solid rgb(187,0,0);
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-}
-@-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-body { background: #f2f1ec; }
-
-/*
-* - we want container that has a fixed width (910px) on devices larger than 992px
-* - we want a container that is 100% width on devices smaller than 992px
-*/
-.container { background: white; width: 100%; }
-.first-container { padding-top: 33px; }
-@media (min-width: 576px) {
-  /*.container { border-left: 1px solid rgb(187,0,0); border-right: 1px solid rgb(187,0,0); } */
-}
-@media (min-width: 992px) {
-  .container { max-width: 910px; background: white; }
-}
-@media (min-width: 1300px) {
-  .container { margin-left: 50px; }
-}
-
-a { color: rgb(187,0,0); }
-a:hover { color: #003365; }
-
 button:focus { outline: none; }
 
 /*
 * Font Styling
 */
 h1, h2, h3, h4, h5, h6 { font-size: 1.2rem; }
-
-.entry-title { font-size: 1.75rem; color: #003365; margin: 0; }
-.entry-subheader { font-size: 1.25rem; }
-.entry-meta { font-size: 0.8rem; }
-.entry-title a { color: inherit; }
-.entry-title a:hover { color: rgb(187,0,0); text-decoration: none; }
-.entry-content p { margin: 8px 0; }
-.entry-content a:hover { text-decoration: none; }
-
-@media (min-width: 768px) {
-  .sidebar-style-standard .entry-title,
-  .sidebar-style-ad .entry-title { font-size: 1rem; }
-}
-@media (min-width: 576px) {
-  .post-style-featured .entry-title { font-size: 1rem; }
-}
-@media (min-width: 768px) {
-  .sidebar-style-standard .entry-header {
-    margin-top: 5px;
-    margin-bottom: 15px;
-  }
-}
-.post-style-block{}
-.post-style-duo{}
-.post-style-featured{}
-.post-style-folded{}
-
 
 /**
 * 1.0 Colors
@@ -106,25 +32,6 @@ h1, h2, h3, h4, h5, h6 { font-size: 1.2rem; }
 /**
 * 2.0 Helper Classes
 */
-.headline-spacer { height: 1px; }
-.btn-primary-red { background: rgb(187,0,0); color: white; }
-.btn-primary-blue { background: #003365; color: white; }
-.btn-primary-blue:hover { color: white; text-decoration: underline; }
-.btn-facebook-blue { background: #3b5998; color: white; }
-.btn-xing-green { background: #126567; color: white; }
-.df-fixed-toggler { width: 50px; height: 50px; position: fixed; z-index: 2; border-radius: 50px; border-width: 3px; border-style: outset; border-color: #003365; }
-.df-toggler { width: 50px; height: 50px; z-index: 2; border-radius: 50px; border-width: 3px; border-style: outset; border-color: #003365; }
-.df-fixed-toggler, .df-toggler { box-shadow: 1px 1px 1px black; }
-.show-modal-link { color: rgb(187,0,0); }
-#search-modal-toggler { bottom: 75px; left: 15px; }
-#scroll-top-button { bottom: 15px; left: 15px; }
-.two-column-adjusted-padding-ul { padding-left: 20px; padding-right: 30px; }
-._ps-header { font-size: 0.8rem; margin: 5px 0; }
-.btn-newsletter-teaser { text-align: left; }
-.btn-newsletter-teaser:hover { text-decoration: none; color: white; }
-.btn-newsletter-teaser span { font-size: 1.4rem; }
-.btn-newsletter-teaser ul { list-style: none; padding-left: 0; }
-
 .w__100 { width: 100px; }
 .w__150 { width: 150px; }
 .w__200 { width: 200px; }
@@ -135,153 +42,18 @@ h1, h2, h3, h4, h5, h6 { font-size: 1.2rem; }
 
 .fs__0_8 { font-size: 0.8px; }
 .fs__0_8_rem { font-size: 0.8rem; }
-/**
-* ~~~~~~~~~~~~~~
-* --------------
-* HEADER MENU INC. ANIMATIONS
-* --------------
-* ~~~~~~~~~~~~~~
-*/
-#site-logo{ width: 200px; }
-#navbarMenuContainer{ padding: 10px 0; }
-/* the bootstrap 4 navbar only appears on screens lager than 768px */
-@media (min-width: 768px) {
-  #site-logo{ width: 250px; }
-  .navbar{ background: rgb(187,0,0); }
-  .navbar li { background: rgb(187,0,0); }
-  .navbar a{ color: white; padding: 0}
-  #navbarMenuContainer{ padding: 0; }
-  .dropdown-menu{
-    background: rgb(187,0,0);
-    border-radius: 0;
-    border: none;
-    padding: 3px 10px;
-  }
-  .dropdown-item { background: rgb(187,0,0); margin: 5px 0; }
-  .dropdown-item:hover { background: rgb(187,0,0); color: white; }
-}
-#menu-all-pages{padding-left: 0;}
-.mobile-menu{ list-style: none; padding-left: 0; }
+.fs__0_9 { font-size: 0.9px; }
+.fs__0_9_rem { font-size: 0.9rem; }
+.fs__1_0 { font-size: 1.0px; }
+.fs__1_0_rem { font-size: 1.0rem; }
+.fs__1_1 { font-size: 01.1px; }
+.fs__1_1_rem { font-size: 1.1rem; }
 
-
-/* animated menu list items */
-.animated-menu-6289 { margin: 10px 0; }
-.animated-menu-6289 * { }
-.animated-menu-6289 > li {
-  display: inline-block;
-  list-style: outside none none;
-  margin: 0 10px;
-  padding: 0;
-}
-.animated-menu-6289 > li > a {
-  padding: 0;
-  color: rgba(255, 255, 255, 1);
-  position: relative;
-  text-decoration: none;
-}
-.animated-menu-6289 > li > a:before,
-.animated-menu-6289 > li > a:after {
-  position: absolute;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-.animated-menu-6289 > li > a:before {
-  bottom: 0;
-  display: block;
-  height: 2px;
-  width: 0%;
-  content: "";
-  background-color: white;
-}
-.animated-menu-6289 > li > a:after {
-  left: 0;
-  top: 0;
-  padding: 0;
-  position: absolute;
-  content: attr(data-hover);
-  color: rgb(187,0,0);
-  white-space: nowrap;
-  max-width: 0%;
-  overflow: hidden;
-}
-.animated-menu-6289 > li > a:hover:before,
-.animated-menu-6289 > li.current-menu-item > a:before {
-  opacity: 1;
-  width: 100%;
-}
-.animated-menu-6289 > li > a:hover:after,
-.animated-menu-6289 > li.current-menu-item > a:after {
-  max-width: 100%;
-}
 
 /**
-* ~~~~~~~~~~~~~~
-* --------------
-* TEMPLATE PARTS
-* --------------
-* ~~~~~~~~~~~~~~
+* 3.0 Forms and Elements
 */
-
-/*
-* -------
-* # ADS #
-* -------
-* ad-block.php
-* ad-superbanner.php
-* ad-featured.php
-*/
-
-.ad-style-block, .ad-style-superbanner, .ad-style-featured { }
-.ad-meta-text { background: white; font-size: 0.75rem; }
-
-.ad-style-skyscraper { display: none; }
-@media (min-width: 1300px) {
-  .ad-style-skyscraper { 
-    height: auto;
-    top: 425px;
-    left: 1000px; 
-    display: block;
-  }
-}
-@media (min-width: 1300px) and (max-width: 1599px) {
-  .ad-style-skyscraper img, .ad-style-skyscraper {
-    width: 190px;
-  }
-}
-@media (min-width: 1600px) {
-  .ad-style-skyscraper img, .ad-style-skyscraper {
-    width: 280px;
-  }
+.form-group .invalid-feedback {
+  color: white;
 }
 
-
-/* 
-* -----------
-* # TERMINE # 
-* -----------
-* termine/termin-listitem.php;
-*/
-.termin-list-item { }
-.termin-list-item header { font-size: 1.1rem; }
-.termin-list-item article a span, .termin-list-item article span { font-weight: bold; }
-.termin-list-item header a { color: inherit; }
-.termin-listitem-date, .termin-listitem-anlesetext { font-size: 1rem; }
-.termin-list-item header a:hover { text-decoration: none; }
-.termin-list-item article p { border-bottom: 1px solid rgb(187,0,0); }
-@media (min-width: 768px) {
-  .termin-list-item header { font-size: 0.9rem; }
-  .termin-list-item article a span, .termin-list-item article span { font-weight: normal; }
-  .termin-listitem-date, .termin-listitem-anlesetext { font-size: 0.8rem; }
-}
-@media (max-width: 767px) {
-  #index-termine-section-anchor {
-    margin-top: 15px;
-  }
-}
-
-/**
-* 4.0 Single @todo: check if class is used;
-*/
-.single-post-content {
-  margin-bottom: 25px;
-}

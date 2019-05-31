@@ -1,0 +1,64 @@
+extends ../layout.pug
+block content
+    div(class='container py-3')
+        div(class='row')
+            div(class='col-sm-12')
+                h1 All process items
+            
+            if (flashMessageInfo.length > 0)
+                div(class='col-sm-12 py-3')
+                    div(class="alert alert-danger")= flashMessageInfo
+
+    div(class='container py-3')
+        div(class='row')
+            div(class='col-sm-12')
+                form(method='post' action='/admin/process-items/')
+                    div(class='row')
+                        div(class='col-sm-6')
+                            span VON
+                            br
+                            span BIS
+                        div(class='col-sm-6')
+                            div(class='form-group')
+                                label(for='filterInputStatus') Status
+                                select(class='form-control' id='filterInputStatus' name='filterInputStatus')
+                                    option(disabled selected value) select a status
+                                    option(selected=filterInputStatus=='open') open
+                                    option(selected=filterInputStatus=='edit') edit
+                                    option(selected=filterInputStatus=='submitted') submitted
+                                    option(selected=filterInputStatus=='verified') verified
+                                    option(selected=filterInputStatus=='rejected') rejected
+                        
+                    div(class='row')
+                        div(class='col-sm-12')      
+                            button(type='submit' class='btn btn-block btn-primary-red mb-2') Filter
+    
+    div(class='container-fluid py-3')
+        div(class='row')
+            each item in processItems
+                div(class='col-sm-12')
+                    div(class='row')
+                        div(class='col-sm-4')
+                            span(class='fs__0_8_rem')= item._id
+                            br
+                            - function addLeadingZero(n){return n<10? '0'+n:''+n;}
+                            span(class='fs__0_8_rem').
+                                Creation date: #{addLeadingZero(item.creationDate.getUTCDate())}.#{addLeadingZero(item.creationDate.getUTCMonth())}.#{item.creationDate.getUTCFullYear()}
+                            br
+                            span(class='fs__0_8_rem').
+                                Creation time: #{addLeadingZero(item.creationDate.getUTCHours())}:#{addLeadingZero(item.creationDate.getMinutes())}:#{addLeadingZero(item.creationDate.getSeconds())}
+
+                        div(class='col-sm-4')
+                            span(class='fs__0_8_rem') Editor: #{item.editUser}
+
+                        div(class='col-sm-4')
+                            span(class='fs__0_8_rem') Status: #{item.status}
+                            br
+                            span(class='fs__0_8_rem') TargetURL: #{item.targetUrl}
+                            br
+                            span(class='fs__0_8_rem') BacklinkOriginURL: #{item.backlinkOriginUrl}
+
+
+
+
+

@@ -8,10 +8,17 @@ div(id="navbarMenuContainer" class="container-fluid px-0")
             if isAuthenticated
                 ul(class='navbar-nav mr-auto')
                     li(class='nav-item')
-                        a(class='nav-link' href='/users/dashboard') Dashboard
+                        a(class='nav-link' href='/dashboard') Dashboard
                     if isAdmin
+                        li(class='nav-item dropdown')
+                            a(class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Process items
+                            div(class='dropdown-menu' aria-labelledby='navbarDropdown')
+                                a(class='dropdown-item' href='/admin/process-items') List
+                                a(class='dropdown-item' href='/admin/process-items/add') Add
+                                div(class='dropdown-divider')
+                                a(class='dropdown-item' href='#') Something else here
                         li(class='nav-item')
-                            a(class='nav-link' href='/admin/users/users-list') All users
+                            a(class='nav-link' href='/admin/users/users-list') All users                      
                     li(class='nav-item')
                         a(class='nav-link' href='/users/logout') Logout
             if !isAuthenticated

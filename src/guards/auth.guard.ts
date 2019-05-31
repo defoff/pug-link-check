@@ -9,7 +9,7 @@ const isLoggedIn = function(request: express.Request, response: express.Response
   response.redirect('/users/login/');
 }
 
-const isAdmin = function(request: express.Request, response: express.Response, next: express.NextFunction) {
+const isLoggInAsAdmin = function(request: express.Request, response: express.Response, next: express.NextFunction) {
   // if user is authenticated in the session, carry on 
   if (request.isAuthenticated() && request.user.role === 'admin')
       return next();
@@ -18,4 +18,4 @@ const isAdmin = function(request: express.Request, response: express.Response, n
   response.redirect('/users/login/');
 }
 
-export { isLoggedIn, isAdmin } 
+export { isLoggedIn, isLoggInAsAdmin } 

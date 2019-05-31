@@ -1,6 +1,16 @@
 extends ../layout.pug
 block content
   div(class='container py-3')
+
+    if (flashMessageInfo.length > 0)
+      div(class='row')
+        div(class='col-sm-12 py-3')
+          div(class='alert alert-danger')= flashMessageInfo
+
     div(class='row')
-        div(class='col-sm-12')
-            h1 DASHBOARD
+      div(class='col-sm-12')
+        h1 DASHBOARD
+    
+    div(class='row')
+      div(class='col-sm-6')
+        a(href='/dashboard/checkout' class='btn btn-default') Checkout

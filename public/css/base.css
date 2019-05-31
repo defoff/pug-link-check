@@ -9,19 +9,3 @@ body { background: crimson; }
 .fs__10 { font-size: 10px; }
 .fs__11 { font-size: 11px; }
 .fs__40 { font-size: 40px; }
-
-#main-content { }
-
-#base-form { width: 265px; margin: 0 auto; }
-
-#crawlerResultSection{
-    background: white;
-    text-align: center;
-}
-#crawlerResultSection span
-
-#absoluteLinkUrlSection { }
-#absoluteLinkUrlSection ul { list-style: none; }
-
-#footer { position: fixed; text-align: center; width: 100%; bottom: 0px; }
-#footer div { color: white; }

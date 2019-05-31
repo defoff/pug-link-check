@@ -5,7 +5,7 @@ const objId = new mongoose.Types.ObjectId();
 
 const processItemSchema = new mongoose.Schema({
     _id                 : { type: String, default: objId.toHexString() },
-    creationDate        : { type: Date, default: objId.getTimestamp() },
+    creationDate        : { type: Date, default: new Date() },
     editDates           : { type: [Date], default: [] },
     editDate            : { type: Date, default: null },
     editUsers           : { type: [String], default: [] },
@@ -15,7 +15,7 @@ const processItemSchema = new mongoose.Schema({
 
     status              : { type: String, default: 'open'},
     targetUrl           : { type: String },
-    backlinkOriginUrl   : { type: String }
+    backlinkOriginUrl   : { type: String, default: '' },
 });
 
 const processItemModel = mongoose.model<ProcessItem & mongoose.Document>('ProcessItem', processItemSchema);
