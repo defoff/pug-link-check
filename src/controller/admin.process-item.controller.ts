@@ -66,7 +66,7 @@ class AdminProcessItemController implements Controller {
     }
 
     private renderArchiveProcessItems = (request: flash.Request, response: express.Response) => {
-        this.processItems.find().sort({creationDate: -1})
+        this.processItems.find().sort({ creationDate: -1 })
             .then((processItems) => {
                 response.render('admin/process-items-archive',
                     { 
