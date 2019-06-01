@@ -76,20 +76,20 @@ class UserProcessItemController implements Controller {
     }
 
     private findNextProcessItemForUser = (request: flash.Request, response: express.Response, done) => {
-        this.processItems.find({ editUser: null, status: 'open' })
+        this.processItems.find({ status: 'open' })
         .then((availableItems: ProcessItem[]) => {
             if (availableItems.length>0) {
                 const nowDate = this.createDateAsUTC(new Date());
                 this.processItems.findByIdAndUpdate(availableItems[0]._id, 
                         { 
                             editUser: request.user._id, 
-                            editUsers: request.user._id, 
+                            editUsers: request.user._id, // FEHLER; HIER MUSS DAS ARRAY REIN
                             status: 'edit', 
                             editDate: nowDate,
                             editDates: availableItems[0].editDates.push(nowDate)
                         })
                     .then(() => {
-                        request.flash('info', 'Neuer Link in zur Bearbeitung geöffnet.');
+                        request.flash('info', 'Neuer Link zur Bearbeitung geöffnet.');
                         // redirect to his edit page
                         return done(true);
                     });
@@ -191,6 +191,7 @@ class UserProcessItemController implements Controller {
                         isAdmin: request.user.role === 'admin' ? true : false,
                         username: request.user ? request.user.email : '',
 
+                        documentId: done[0]._id,
                         targetUrl: done[0].targetUrl,
                         backlinkOriginUrl: '',
         

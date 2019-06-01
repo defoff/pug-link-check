@@ -35,6 +35,7 @@ class App {
  
   private initializeMiddlewares() {
     this.app.use(helmet());
+    this.app.use(helmet.noCache());
     passportConfig.default(passport);
     this.app.use(express.static('public'));
     // flash messages require sessions

@@ -4,7 +4,9 @@ block content
         div(class='row')
             div(class='col-sm-12')
                 h1 Fürge einen Backlink hinzu
-        
+                p Dokumentennummer:
+                p= documentId
+
             if (flashMessageInfo.length > 0)
                 div(class='col-sm-12 py-3')
                     div(class="alert alert-danger")= flashMessageInfo

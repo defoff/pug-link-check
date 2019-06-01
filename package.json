@@ -64,6 +64,7 @@
     "mongoose": "^5.3.15",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "popper.js": "^1.15.0",
     "pug": "^2.0.3",
     "randomstring": "^1.1.5",
     "request": "^2.88.0",
