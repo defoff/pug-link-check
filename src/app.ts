@@ -29,7 +29,8 @@ class App {
 
   private initializeViewEngine() {
     this.app.set('view engine', 'pug');
-    this.app.set('views', __dirname + '../../views');
+    // this.app.set('views', __dirname + '../../views');
+    this.app.set('views', './views');
   }
  
   private initializeMiddlewares() {
