@@ -79,13 +79,15 @@ class UserProcessItemController implements Controller {
         this.processItems.find({ editUser: null, status: 'open' })
         .then((availableItems: ProcessItem[]) => {
             if (availableItems.length>0) {
-                let firstItem = availableItems[0];
-                firstItem.editUser = request.user._id;
-                firstItem.editUsers.push(request.user._id);
-                firstItem.status = 'edit'
-                firstItem.editDate = this.createDateAsUTC(new Date()),
-                // editDate and editDates need to be set here
-                this.processItems.findByIdAndUpdate(firstItem._id, { editUser: request.user._id, editUsers: firstItem.editUsers, status: firstItem.status, editDate: this.createDateAsUTC(new Date()) })
+                const nowDate = this.createDateAsUTC(new Date());
+                this.processItems.findByIdAndUpdate(availableItems[0]._id, 
+                        { 
+                            editUser: request.user._id, 
+                            editUsers: request.user._id, 
+                            status: 'edit', 
+                            editDate: nowDate,
+                            editDates: availableItems[0].editDates.push(nowDate)
+                        })
                     .then(() => {
                         request.flash('info', 'Neuer Link in zur Bearbeitung geöffnet.');
                         // redirect to his edit page
@@ -118,7 +120,7 @@ class UserProcessItemController implements Controller {
             // if user is not registered in any process item
             if (done==null) {
                 // redirect user to dashboard
-                request.flas('Fehler: 0x34: Die Aktion konnte nicht durchgeführt werden.');
+                request.flash('Fehler: 0x34: Die Aktion konnte nicht durchgeführt werden.');
                 response.redirect('/dashboard');
             } 
             // if user is registered in any process item 

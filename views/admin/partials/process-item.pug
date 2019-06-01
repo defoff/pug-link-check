@@ -15,16 +15,27 @@ div(class='col-sm-12 py-3')
             span(class='font-weight-bold') #{item.editUser}
         
         div(class='col-md-4 fs__0_8_rem')   
-
             if (item.editDate)
                 span Edit date: 
-                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCDate())}.#{addLeadingZero(item.creationDate.getUTCMonth())}.#{item.creationDate.getUTCFullYear()}
+                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCDate())}.#{addLeadingZero(item.editDate.getUTCMonth())}.#{item.editDate.getUTCFullYear()}
                 br
                 span Edit time: 
-                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCHours())}:#{addLeadingZero(item.creationDate.getMinutes())}:#{addLeadingZero(item.creationDate.getSeconds())}
+                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCHours())}:#{addLeadingZero(item.editDate.getMinutes())}:#{addLeadingZero(item.editDate.getSeconds())}
                 br
             span(class='font-weight-bold') TargetURL: 
             a(href=item.targetUrl target='_blank')= item.targetUrl
             br
             span(class='font-weight-bold') BacklinkOriginURL: 
             a(href=item.backlinkOriginUrl target='_blank')= item.backlinkOriginUrl
+        
+        div(class='col-md-4 fs__0_8_rem')
+            if (item.submissionDate)
+                span Submission date: 
+                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCDate())}.#{addLeadingZero(item.submissionDate.getUTCMonth())}.#{item.submissionDate.getUTCFullYear()}
+                br
+                span Submission time: 
+                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCHours())}:#{addLeadingZero(item.submissionDate.getMinutes())}:#{addLeadingZero(item.submissionDate.getSeconds())}
+                br
+            if (item.submissionUser)
+                span Submitter: 
+                span(class='font-weight-bold') #{item.submissionUser}                
