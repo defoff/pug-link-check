@@ -57,9 +57,20 @@ a:hover { color: #212529; }
 
 
 /**
-* 3.0 Forms and Elements
+* 3.0 Forms
 */
 .form-group .invalid-feedback {
   color: white;
 }
 
+/**
+* 4.0 Elements
+*/
+.dashboard-button { display:table; height: 250px; width: 100%; color: #212529; }
+.dashboard-button:hover { color: rgb(187,0,0); text-decoration: underline; }
+.dashboard-button span { display:table-cell; vertical-align:middle; }
+
+.btn-primary-white {
+  background: white;
+  color: #212529;
+}

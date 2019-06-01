@@ -37,10 +37,5 @@ div(class='col-sm-12 py-3')
                 span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCHours())}:#{addLeadingZero(item.submissionDate.getMinutes())}:#{addLeadingZero(item.submissionDate.getSeconds())}
                 br
             if (item.submissionUser)
-                span Submitter: 
+                span Submitter:
                 span(class='font-weight-bold') #{item.submissionUser}
-                br
-
-            if (item.status=='submitted')
-                a(href='/admin/process-items/verify/' + item._id class='btn btn-primary-white mr-2') verify
-                a(href='/admin/process-items/reject/' + item._id class='btn btn-primary-white') reject   

@@ -33,6 +33,8 @@ class AdminProcessItemController implements Controller {
         this.router.get(`${this.path}/add`, isLoggInAsAdmin, this.renderAddProcessItemPage);
         this.router.post(`${this.path}/add`, isLoggInAsAdmin, this.sanitizationChain(),
         this.addProcessItem);
+        this.router.get(`${this.path}/verify/:id`, isLoggInAsAdmin, this.verifyProcessItem);
+        this.router.get(`${this.path}/reject/:id`, isLoggInAsAdmin, this.rejectProcessItem);
     }
 
     private sanitizationChain = () => {
@@ -169,6 +171,20 @@ class AdminProcessItemController implements Controller {
                     }              
                 );
             });
+    }
+
+    private verifyProcessItem = (request: flash.Request, response: express.Response) => {
+        const id = request.params.id;
+        this.processItems.findByIdAndUpdate({_id: id}, { status: 'verified'}).then(() => {
+            this.renderArchiveProcessItems(request, response);
+        });
+    }
+
+    private rejectProcessItem = (request: flash.Request, response: express.Response) => {
+        const id = request.params.id;
+        this.processItems.findByIdAndUpdate({_id: id}, { status: 'rejected'}).then(() => {
+            this.renderArchiveProcessItems(request, response);
+        }) 
     }
 }
 

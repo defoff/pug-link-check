@@ -33,6 +33,7 @@ class UserProcessItemController implements Controller {
         this.router.get(`${this.path}/checkout`, isLoggedIn, this.checkoutProcessItem);
         this.router.get(`${this.path}/edit`, isLoggedIn, this.renderEditProcessItemPage);
         this.router.post(`${this.path}/edit`, isLoggedIn, this.sanitizationChain(), this.finishProcessItem);
+        this.router.get(`${this.path}/status`, isLoggedIn, this.renderProcessItemStatusPage);
     }
 
     private sanitizationChain = () => {
@@ -80,13 +81,17 @@ class UserProcessItemController implements Controller {
         .then((availableItems: ProcessItem[]) => {
             if (availableItems.length>0) {
                 const nowDate = this.createDateAsUTC(new Date());
+                let editDates = availableItems[0].editDates;
+                editDates.push(nowDate);
+                let editUsers = availableItems[0].editUsers;
+                editUsers.push(request.user._id);
                 this.processItems.findByIdAndUpdate(availableItems[0]._id, 
                         { 
                             editUser: request.user._id, 
-                            editUsers: request.user._id, // FEHLER; HIER MUSS DAS ARRAY REIN
+                            editUsers: editUsers,
                             status: 'edit', 
                             editDate: nowDate,
-                            editDates: availableItems[0].editDates.push(nowDate)
+                            editDates: editDates,
                         })
                     .then(() => {
                         request.flash('info', 'Neuer Link zur Bearbeitung geöffnet.');
@@ -94,7 +99,7 @@ class UserProcessItemController implements Controller {
                         return done(true);
                     });
             } else {
-                request.flash('info', 'Zur Zeit gibt es keine Backlinks. Bitte versuchen Sie es später. Sie könne sich per Mail informieren lassen sobald neue Backlinks verfügbar sind.');
+                request.flash('info', 'Zur Zeit gibt es keine Backlinks. Bitte versuchen Sie es später. Sie können sich per Mail informieren lassen sobald neue Backlinks verfügbar sind.');
                 return done(null);
             }
         });
@@ -222,6 +227,34 @@ class UserProcessItemController implements Controller {
                 flashMessageInfo: request.flash('info'),
             }
         );
+    }
+
+    private renderProcessItemStatusPage = (request: flash.Request, response: express.Response) => {
+        this.processItems.find(
+            {
+                'status': { $in: [
+                    'submitted',
+                    'verified',
+                    'rejected'
+                ]},
+                'submissionUser': request.user._id
+            }
+        )
+        .sort({ submissionDate: -1 })
+        .then((processItems) => {
+            response.render('users/status-process-items.pug',
+                {
+                    title: 'Status: Meine Backlinks',
+                    isAuthenticated: request.user ? true : false,
+                    isAdmin: request.user.role === 'admin' ? true : false,
+                    username: request.user ? request.user.email : '',
+
+                    processItems,
+                        
+                    flashMessageInfo: request.flash('info'),
+                }
+            );
+        });
     }
 
 }
