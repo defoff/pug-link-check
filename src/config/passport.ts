@@ -54,7 +54,8 @@ export default function(passport) {
 
                 // check to see if theres already a user with that email
                 if (user) {
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                    // ERROR REASON: email is allready taken
+                    return done(null, false, req.flash('signupMessage', 'Fehler 3x23: Es konnte kein Benutzerkonto angelegt werden.'));
                 } else {
 
                     // if there is no user with that email
@@ -99,14 +100,16 @@ export default function(passport) {
 
             // if no user is found, return the message
             if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                // ERROR REASON: no user found
+                return done(null, false, req.flash('loginMessage', 'Fehler 3x17: Der Anmeldevorgang konnte nicht durchgeführt werden.')); // req.flash is the way to set flashdata using connect-flash
 
             // if (!user.verified)
                 // return done(null, false, req.flash('loginMessage', 'User not verified.')); // req.flash is the way to set flashdata using connect-flash
 
             // if the user is found but the password is wrong
             if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                // ERROR REASON: Oops! Wrong password.
+                return done(null, false, req.flash('loginMessage', 'Fehler 3x56: Der Anmeldevorgang konnte nicht durchgeführt werden.')); // create the loginMessage and save it to session as flashdata
 
             // all is well, return successful user
             return done(null, user);

@@ -36,29 +36,4 @@ block content
     div(class='container-fluid py-3')
         div(class='row')
             each item in processItems
-                div(class='col-sm-12')
-                    div(class='row')
-                        div(class='col-sm-4')
-                            span(class='fs__0_8_rem')= item._id
-                            br
-                            - function addLeadingZero(n){return n<10? '0'+n:''+n;}
-                            span(class='fs__0_8_rem').
-                                Creation date: #{addLeadingZero(item.creationDate.getUTCDate())}.#{addLeadingZero(item.creationDate.getUTCMonth())}.#{item.creationDate.getUTCFullYear()}
-                            br
-                            span(class='fs__0_8_rem').
-                                Creation time: #{addLeadingZero(item.creationDate.getUTCHours())}:#{addLeadingZero(item.creationDate.getMinutes())}:#{addLeadingZero(item.creationDate.getSeconds())}
-
-                        div(class='col-sm-4')
-                            span(class='fs__0_8_rem') Editor: #{item.editUser}
-
-                        div(class='col-sm-4')
-                            span(class='fs__0_8_rem') Status: #{item.status}
-                            br
-                            span(class='fs__0_8_rem') TargetURL: #{item.targetUrl}
-                            br
-                            span(class='fs__0_8_rem') BacklinkOriginURL: #{item.backlinkOriginUrl}
-
-
-
-
-
+                include partials/process-item.pug

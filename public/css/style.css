@@ -1,4 +1,8 @@
-body { background: crimson; }
+/*
+* #212529 is fg-primary-text-color from section 1.0 Colors
+*/
+body { background: crimson; color: #212529; padding-top: 50px; }
+
 
 @media (max-width: 575.98px) {}
 @media (min-width: 576px) and (max-width: 767.98px) {}
@@ -12,6 +16,8 @@ button:focus { outline: none; }
 * Font Styling
 */
 h1, h2, h3, h4, h5, h6 { font-size: 1.2rem; }
+a { color: white; }
+a:hover { color: #212529; }
 
 /**
 * 1.0 Colors

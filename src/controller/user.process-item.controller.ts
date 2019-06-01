@@ -83,15 +83,16 @@ class UserProcessItemController implements Controller {
                 firstItem.editUser = request.user._id;
                 firstItem.editUsers.push(request.user._id);
                 firstItem.status = 'edit'
+                firstItem.editDate = this.createDateAsUTC(new Date()),
                 // editDate and editDates need to be set here
-                this.processItems.findByIdAndUpdate(firstItem._id, { editUser: request.user._id, editUsers: firstItem.editUsers, status: firstItem.status })
+                this.processItems.findByIdAndUpdate(firstItem._id, { editUser: request.user._id, editUsers: firstItem.editUsers, status: firstItem.status, editDate: this.createDateAsUTC(new Date()) })
                     .then(() => {
-                        request.flash('info', 'Neue Link in Bearbeitung.');
+                        request.flash('info', 'Neuer Link in zur Bearbeitung geöffnet.');
                         // redirect to his edit page
                         return done(true);
                     });
             } else {
-                request.flash('info', 'Zur Zeit gibt es keine verfügbaren Backlinks.');
+                request.flash('info', 'Zur Zeit gibt es keine Backlinks. Bitte versuchen Sie es später. Sie könne sich per Mail informieren lassen sobald neue Backlinks verfügbar sind.');
                 return done(null);
             }
         });
