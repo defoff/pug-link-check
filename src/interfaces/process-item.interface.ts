@@ -1,3 +1,5 @@
+import ValidationStats from './validation.stats.interface'
+
 interface ProcessItem {
     _id: string;
     creationDate: Date;
@@ -11,6 +13,8 @@ interface ProcessItem {
     status: string;
     targetUrl: string;
     backlinkOriginUrl: string;
+
+    validationStats: ValidationStats[];
 }
 
 export default ProcessItem;

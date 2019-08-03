@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import ProcessItem from '../interfaces/process-item.interface';
+import ValidationStats from '../interfaces/validation.stats.interface'
 
 const objId = new mongoose.Types.ObjectId();
 
@@ -16,6 +17,8 @@ const processItemSchema = new mongoose.Schema({
     status              : { type: String, default: 'open'},
     targetUrl           : { type: String },
     backlinkOriginUrl   : { type: String, default: '' },
+
+    validationStats     : { type: Object, default: [] }
 });
 
 const processItemModel = mongoose.model<ProcessItem & mongoose.Document>('ProcessItem', processItemSchema);

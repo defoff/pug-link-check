@@ -42,5 +42,16 @@ div(class='col-sm-12 py-3')
                 br
 
             if (item.status=='submitted')
-                a(href='/admin/process-items/verify/' + item._id class='btn btn-primary-white mr-2') verify
-                a(href='/admin/process-items/reject/' + item._id class='btn btn-primary-white') reject   
+                a(href='/admin/process-items/validate/' + item._id class='btn btn-primary-white mr-2 my-1')
+                    i(class='fas fa-diagnoses')
+                    span  validate
+                a(href='/admin/process-items/verify/' + item._id class='btn btn-primary-white mr-2 my-1')
+                    i(class='fas fa-check fa-1x')
+                    span  verify
+                a(href='/admin/process-items/reject/' + item._id class='btn btn-primary-white mr-2 my-1')
+                    i(class='fas fa-times fa-1x')
+                    span  reject
+            
+            a(href='/admin/process-items/delete/' + item._id class='btn btn-primary-white mr-2 my-1')
+                i(class='fas fa-trash fa-1x')
+                span  delete @TBD

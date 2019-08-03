@@ -15,6 +15,8 @@ import * as expressValidator from 'express-validator';
 import * as randomstring from 'randomstring';
 import { isLoggedIn, isLoggInAsAdmin } from '../guards/auth.guard';
 import { Validator } from '../services/validation.service';
+import { request } from 'http';
+import ValidationStats from '../interfaces/validation.stats.interface';
 
 class AdminProcessItemController implements Controller {
     public path = '/admin/process-items';
@@ -35,6 +37,7 @@ class AdminProcessItemController implements Controller {
         this.addProcessItem);
         this.router.get(`${this.path}/verify/:id`, isLoggInAsAdmin, this.verifyProcessItem);
         this.router.get(`${this.path}/reject/:id`, isLoggInAsAdmin, this.rejectProcessItem);
+        this.router.get(`${this.path}/validate/:id`, isLoggInAsAdmin, this.validateProcessItem);        
     }
 
     private sanitizationChain = () => {
@@ -185,6 +188,75 @@ class AdminProcessItemController implements Controller {
         this.processItems.findByIdAndUpdate({_id: id}, { status: 'rejected'}).then(() => {
             this.renderArchiveProcessItems(request, response);
         }) 
+    }
+
+    private validateProcessItem = (request: flash.Request, response: express.Response) => {
+        //grab id
+        const id = request.params.id;
+        console.log(`logging id: ${id}`)
+        let rt = this;
+
+        this.processItems.findById(id, (err, res: ProcessItem) => {
+            console.log(`logging res:ProcessItem: ${res}`)
+
+            // do validation manually here
+            let ltc = this.sanitizeString(res.targetUrl);
+            let stc = this.sanitizeString(res.backlinkOriginUrl);
+            let vali = new Validator(ltc, stc);
+            vali.requestUrl().then((crawlerResult:any) => {
+                //first: update the validationStats on that processItem
+                let stats: ValidationStats = {
+                    validationDate: this.createDateAsUTC(new Date()),
+                    validationTrigger: 'admin',
+                    validationCrawlerResult: crawlerResult.hasLink
+                }
+                res.validationStats.push(stats)
+                //second: update our processitem
+                rt.processItems.findByIdAndUpdate({_id: id}, { validationStats: res.validationStats}).then(() => {
+                    // render response
+                    response.render('admin/validate-process-item', { 
+                        title: 'Validation',
+                        isAuthenticated: request.user ? true : false,
+                        isAdmin: request.user.role === 'admin' ? true : false,
+                        username: request.user ? request.user.email : '',
+    
+                        id: request.params.id,
+                        error: false,
+                        pageTitle: crawlerResult.pageTitle,
+                        hasLink: crawlerResult.hasLink,
+                        links: crawlerResult.links,
+                        ltc,
+                        stc,
+
+                        validationStats: res.validationStats,
+    
+                        flashMessageInfo: request.flash('info')
+                    });
+                });
+            }).catch((err) => {
+                if (err.type === 'validation-error') {
+                    console.log('validation-error');
+                    response.render('admin/validate-process-item', {
+                        title: 'Validation',
+                        isAuthenticated: request.user ? true : false,
+                        isAdmin: request.user.role === 'admin' ? true : false,
+                        username: request.user ? request.user.email : '',
+
+                        userLtc: err.userLtc,
+                        userStc: err.userStc,
+                        ltc: err.ltc,
+                        stc: err.stc,
+
+                        flashMessageInfo: request.flash('info')
+                    });
+                }
+            });
+        });   
+    }
+
+    private sanitizeString(str) {
+        str = str.replace(/[^a-z0-9.:/,_-]/gim,"");
+        return str.trim();
     }
 }
 

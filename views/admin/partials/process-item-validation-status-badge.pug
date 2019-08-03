@@ -1,0 +1,17 @@
+- function addLeadingZero(n){return n<10? '0'+n:''+n;}
+if (!entry.validationCrawlerResult)
+    span(class='badge badge-danger mx-2 my-2 fs__0_9_rem')
+        i(class='fas fa-times-circle fa-1x')
+        if (entry.validationTrigger !== 'admin')
+            i(class='fas fa-server fa-1x')
+        if (entry.validationTrigger === 'admin')
+            i(class='fas fa-user-tie fa-1x')
+        span(class='font-weight-bold') #{addLeadingZero(entry.validationDate.getUTCDate())}.#{addLeadingZero(entry.validationDate.getUTCMonth())}.#{entry.validationDate.getUTCFullYear()}
+if (entry.validationCrawlerResult)
+    span(class='badge badge-success mx-2 my-2 fs__0_9_rem')
+        i(class='fas fa-check fa-1x')
+        if (entry.validationTrigger !== 'admin')
+            i(class='fas fa-server fa-1x')
+        if (entry.validationTrigger === 'admin')
+            i(class='fas fa-user-tie fa-1x')
+        span(class='font-weight-bold') #{addLeadingZero(entry.validationDate.getUTCDate())}.#{addLeadingZero(entry.validationDate.getUTCMonth())}.#{entry.validationDate.getUTCFullYear()}
