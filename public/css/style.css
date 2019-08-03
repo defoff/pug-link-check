@@ -28,8 +28,8 @@ a:hover { color: #212529; }
 .fg-primary-white { color: #ffffff; }
 .bg-primary-blue { background: #003365; }
 .fg-primary-blue { color: #003365; }
-.bg-primary-red { background: rgb(187,0,0); }
-.fg-primary-red { color: rgb(187,0,0); }
+.bg-primary-red { background: crimson; }
+.fg-primary-red { color: crimson; }
 .fg-custom-gray-light { color: #dee2e6; }
 .bg-custom-gray-light { background: #dee2e6; }
 .fg-custom-gray-dark { color: #818a91; }
@@ -54,7 +54,6 @@ a:hover { color: #212529; }
 .fs__1_0_rem { font-size: 1.0rem; }
 .fs__1_1 { font-size: 01.1px; }
 .fs__1_1_rem { font-size: 1.1rem; }
-
 
 /**
 * 3.0 Forms

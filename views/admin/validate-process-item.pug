@@ -1,0 +1,73 @@
+extends ../layout.pug
+block content
+    div(class='container')
+        div(class='row')
+            div(class='col-sm-12 pt-3')
+            
+            if (flashMessageInfo.length > 0)
+                div(class='col-sm-12 py-3')
+                    div(class="alert alert-danger")= flashMessageInfo
+
+    div(class='container bg-primary-red fg-primary-white')
+        div(class='row')
+            div(class='col-sm-12')
+                h1= 'VALIDATION: ' + id
+            div(class='col-sm-6 fs__0_8_rem')
+                if error
+                    p= 'Error while crawling ' + stc
+                if !error
+                    p= 'Crawling ' + stc + ' for links (backlinks) to ' + ltc
+                    a(href=stc class='btn bg-primary-white fg-primary-red' target='blank')
+                        i(class='fas fa-external-link-square-alt')
+                        span= ' Go to: ' + stc
+            div(class='col-sm-6')
+                if error
+                    p= 'Error while crawling ' + stc
+                if !error
+                    div
+                        span(class='fs__0_8_rem') Document title: 
+                            span
+                                em= pageTitle
+                    div(class='text-center')
+                        if hasLink
+                            i(class='fas fa-check fa-5x')
+                        if !hasLink
+                            i(class='fas fa-times fa-5x')
+ 
+    
+    div(class='container bg-primary-white')
+        div(class='row')
+            if !error && validationStats
+                div(class='col-sm-12 pt-3')
+                    h2 Validation Metrics
+                    p This ProcessItem was checked: #{validationStats.length} times.
+                    each entry in validationStats
+                        include partials/process-item-validation-status-badge.pug
+
+            if !error && links              
+                div(class='col-sm-12 py-3')
+                    h2= 'Links Metrics ' + links.length
+                    p= links.length + ' Links found on ' + pageTitle + ' | ' + stc
+                    each entry in links
+                        include partials/process-item-link-badge.pug
+                    
+                div(class='col-sm-12 py-3')
+                    if lastQueries
+                        div
+                            ul
+                                each query in lastQueries
+                                    li
+                                        i(class='fas fa-link fa-2x')
+                                        = 'Link: ' + query.linkToCheck + ' checked on ' + query.siteToCheck
+                
+                div(class='col-sm-12 bg-primary-red py-3')
+                    h2(class='fg-primary-white') Process Item Actions
+                    a(href='/admin/process-items/verify/' + id class='btn btn-primary-white mr-3') 
+                        i(class='fas fa-check fa-1x')
+                        span  verify
+                    a(href='/admin/process-items/reject/' + id class='btn btn-primary-white mr-3')
+                        i(class='fas fa-times fa-1x')
+                        span  reject
+                    a(href='/admin/process-items/delete/' + id class='btn btn-primary-white mr-3')
+                        i(class='fas fa-trash fa-1x')
+                        span  delete @TBD
