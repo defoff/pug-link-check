@@ -15,14 +15,19 @@ block content
                 form(method='post' action='/admin/process-items/')
                     div(class='row')
                         div(class='col-sm-6')
-                            span VON
-                            br
-                            span BIS
+                            div(class='form-group row')
+                                label(for="filterInputFrom" class='col-2 col-form-label') von
+                                div(class='col-10')
+                                    input(class='form-control' id='filterInputFrom' name='filterInputFrom' type='date' value=filterInputFrom)
+                            div(class='form-group row')
+                                label(for="filterInputUntil" class='col-2 col-form-label') bis
+                                div(class='col-10')
+                                    input(class='form-control' id='filterInputUntil' name='filterInputUntil' type='date' value=filterInputUntil)
                         div(class='col-sm-6')
                             div(class='form-group')
                                 label(for='filterInputStatus') Status
                                 select(class='form-control' id='filterInputStatus' name='filterInputStatus')
-                                    option(disabled selected value) select a status
+                                    option(selected value) all
                                     option(selected=filterInputStatus=='open') open
                                     option(selected=filterInputStatus=='edit') edit
                                     option(selected=filterInputStatus=='submitted') submitted
@@ -35,5 +40,9 @@ block content
     
     div(class='container-fluid py-3')
         div(class='row')
+            if (processItems.length==0)
+                div(class='col-sm-12')
+                    p Für diese Suche wurden keine Einträge gefunden.
+
             each item in processItems
                 include partials/process-item.pug
