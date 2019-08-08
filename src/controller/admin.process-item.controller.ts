@@ -34,7 +34,7 @@ class AdminProcessItemController implements Controller {
 
     private initializeRoutes() {
         this.router.get(`${this.path}`, isLoggInAsAdmin, this.renderArchiveProcessItems);
-        this.router.post(`${this.path}`, isLoggInAsAdmin, this.filterArchiveProcessItems);
+        this.router.post(`${this.path}`, isLoggInAsAdmin, this.renderArchiveProcessItems);
         this.router.get(`${this.path}/add`, isLoggInAsAdmin, this.renderAddProcessItemPage);
         this.router.post(`${this.path}/add`, isLoggInAsAdmin, this.sanitizationChain(),
             this.addProcessItem);
@@ -76,15 +76,19 @@ class AdminProcessItemController implements Controller {
     private addLeadingZero(n) { return n < 10 ? '0' + n : '' + n; }
 
     private renderArchiveProcessItems = (request: flash.Request, response: express.Response) => {
+        this.validationErrors = validationResult(request);
+        if (!this.validationErrors.isEmpty()) {
+            request.flash('info', 'the filter seems to be false')
+        }
         const d = new Date();
         let fromDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-01`;
         let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate())}`;
         let query = {
             creationDate: {
-                $gt: fromDate,
-                $lt: untilDate
+                $gt: request.body.filterInputFrom ? new Date(request.body.filterInputFrom) : fromDate,
+                $lt: request.body.filterInputUntil ? new Date(request.body.filterInputUntil) : untilDate
             },
-            status: ['open', 'edit', 'submitted', 'verified', 'rejected']
+            status: request.body.filterInputStatus ? request.body.filterInputStatus : ['open', 'edit', 'submitted', 'verified', 'rejected']
         }
         this.processItems.find(query).sort({ creationDate: -1 })
             .then((processItems) => {
@@ -96,9 +100,9 @@ class AdminProcessItemController implements Controller {
                         isAdmin: request.user.role === 'admin' ? true : false,
                         username: request.user ? request.user.email : '',
 
-                        filterInputStatus: ['open', 'edit', 'submitted', 'verified', 'rejected'],
-                        filterInputFrom: fromDate,
-                        filterInputUntil: untilDate,
+                        filterInputStatus: request.body.filterInputStatus ? request.body.filterInputStatus : ['open', 'edit', 'submitted', 'verified', 'rejected'],
+                        filterInputFrom: request.body.filterInputFrom ? request.body.filterInputFrom : fromDate,
+                        filterInputUntil: request.body.filterInputUntil ? request.body.filterInputUntil : untilDate,
 
                         processItems,
 
@@ -164,43 +168,6 @@ class AdminProcessItemController implements Controller {
                 this.renderAddProcessItemPage(request, response);
             });
         }
-    }
-
-    private filterArchiveProcessItems = (request: flash.Request, response: express.Response) => {
-        this.validationErrors = validationResult(request);
-        if (!this.validationErrors.isEmpty()) {
-            request.flash('info', 'the filter seems to be false')
-        }
-        const d = new Date();
-        let fromDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-01`;
-        let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate())}`;
-        let query = {
-            creationDate: {
-                $gt: request.body.filterInputFrom ? new Date(request.body.filterInputFrom) : fromDate,
-                $lt: request.body.filterInputUntil ? new Date(request.body.filterInputUntil) : untilDate
-            },
-            status: request.body.filterInputStatus ? request.body.filterInputStatus : ['open', 'edit', 'submitted', 'verified', 'rejected']
-        }
-
-        this.processItems.find(query)
-            .then((processItems) => {
-                response.render('admin/process-items-archive',
-                    {
-                        title: 'All process items',
-                        isAuthenticated: request.user ? true : false,
-                        isAdmin: request.user.role === 'admin' ? true : false,
-                        username: request.user ? request.user.email : '',
-
-                        filterInputStatus: request.body.filterInputStatus,
-                        filterInputFrom: request.body.filterInputFrom,
-                        filterInputUntil: request.body.filterInputUntil,
-
-                        processItems,
-
-                        flashMessageInfo: request.flash('info')
-                    }
-                );
-            });
     }
 
     private verifyProcessItem = (request: flash.Request, response: express.Response) => {
