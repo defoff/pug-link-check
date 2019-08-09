@@ -13,7 +13,8 @@ const processItemSchema = new mongoose.Schema({
     editUser            : { type: String, default: null },
     submissionDate      : { type: Date, default: null },
     submissionUser      : { type: String, default: null },
-
+    verificationDate   : { type: Date, default: null },
+     
     status              : { type: String, default: 'open'},
     targetUrl           : { type: String },
     backlinkOriginUrl   : { type: String, default: '' },

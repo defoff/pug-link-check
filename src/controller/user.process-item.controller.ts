@@ -34,6 +34,8 @@ class UserProcessItemController implements Controller {
         this.router.get(`${this.path}/edit`, isLoggedIn, this.renderEditProcessItemPage);
         this.router.post(`${this.path}/edit`, isLoggedIn, this.sanitizationChain(), this.finishProcessItem);
         this.router.get(`${this.path}/status`, isLoggedIn, this.renderProcessItemStatusPage);
+        this.router.post(`${this.path}/status`, isLoggedIn, this.renderProcessItemStatusPage);
+        this.router.get(`${this.path}/transaction`, isLoggedIn, this.renderUserTransactionPage);
     }
 
     private sanitizationChain = () => {
@@ -230,18 +232,20 @@ class UserProcessItemController implements Controller {
     }
 
     private renderProcessItemStatusPage = (request: flash.Request, response: express.Response) => {
-        this.processItems.find(
-            {
-                'status': { $in: [
-                    'submitted',
-                    'verified',
-                    'rejected'
-                ]},
-                'submissionUser': request.user._id
-            }
-        )
-        .sort({ submissionDate: -1 })
+        const d = new Date();
+        let fromDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-01`;
+        let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate()+1)}`;
+        let query = {
+            creationDate: {
+                $gt: request.body.filterInputFrom ? new Date(request.body.filterInputFrom) : fromDate,
+                $lt: request.body.filterInputUntil ? new Date(request.body.filterInputUntil) : untilDate
+            },
+            status: request.body.filterInputStatus ? request.body.filterInputStatus : ['submitted', 'verified', 'rejected'],
+            submissionUser: request.user._id,
+        }
+        this.processItems.find(query).sort({ creationDate: -1 })
         .then((processItems) => {
+
             response.render('users/status-process-items.pug',
                 {
                     title: 'Status: Meine Backlinks',
@@ -249,12 +253,52 @@ class UserProcessItemController implements Controller {
                     isAdmin: request.user.role === 'admin' ? true : false,
                     username: request.user ? request.user.email : '',
 
+                    filterInputStatus: request.body.filterInputStatus ? request.body.filterInputStatus : ['submitted', 'verified', 'rejected'],
+                    filterInputFrom: request.body.filterInputFrom ? request.body.filterInputFrom : fromDate,
+                    filterInputUntil: request.body.filterInputUntil ? request.body.filterInputUntil : untilDate,
+
+                    processItems,
+
+                    flashMessageInfo: request.flash('info')
+                }
+            );
+        });
+    }
+
+    private addLeadingZero(n) { return n < 10 ? '0' + n : '' + n; }
+
+    private renderUserTransactionPage = (request: flash.Request, response: express.Response) => {
+        
+        const d = new Date();
+        let fromDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-01`;
+        let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate()+1)}`;
+        let query = {
+            creationDate: {
+                $gt: fromDate,
+                $lt: untilDate
+            },
+            status: ['verified'],
+            submissionUser: request.user._id
+        }
+        this.processItems.find(query)
+        .sort({ submissionDate: -1 })
+        .then((processItems) => {
+            response.render('users/transaction-process-items.pug',
+                {
+                    title: 'Abrechnung',
+                    isAuthenticated: request.user ? true : false,
+                    isAdmin: request.user.role === 'admin' ? true : false,
+                    username: request.user ? request.user.email : '',
+
+                    fromDate,
+                    untilDate,
+
                     processItems,
                         
                     flashMessageInfo: request.flash('info'),
                 }
             );
-        });
+        });       
     }
 
 }

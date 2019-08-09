@@ -1,0 +1,14 @@
+if isAuthenticated && isAdmin
+    div(id='adminMenu')
+        div(class='container-fluid fs__0_8_rem')
+            div(class='row')
+                div(class='col-sm-3')
+                    span(class='font-weight-bold') Manage Process Items
+                    br
+                    a(href='/admin/process-items/add') Add PI
+                    br
+                    a(href='/admin/process-items') List/Filter PI
+                div(class='col-sm-3')
+                    span(class='font-weight-bold') Manage Users
+                    br  
+                    a(href='/admin/users/users-list') All users     

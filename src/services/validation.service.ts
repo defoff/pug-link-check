@@ -74,8 +74,9 @@ class Validator {
     findLink(): boolean {
         let found = false;
         this._allAbsoluteLinks.forEach((link) => {
-            console.log(link.localeCompare(this._ltc.toString()));
-            if (link.localeCompare(this._ltc.toString()) == 0) {
+            console.log(`looking for: ${this._ltc} AND ${this._ltc}/`)
+            console.log(`findLink(): ${link.localeCompare(this._ltc.toString())}`);
+            if (link.localeCompare(this._ltc.toString()) == 0 || link.localeCompare(this._ltc.toString()+'/') == 0) {
                 found = true;
             }
         });

@@ -1,20 +1,49 @@
 extends ../layout.pug
 block content
     div(class='container py-3')
+        div(class='row')
+            div(class='col-sm-12')
+                h1 Meine Backlinks: Status
 
         if (flashMessageInfo.length > 0)
             div(class='row')
                 div(class='col-sm-12 py-3')
                     div(class='alert alert-danger')= flashMessageInfo
 
+    div(class='container py-3')
         div(class='row')
             div(class='col-sm-12')
-                h1 Meine Backlinks: Status
+                form(method='post' action='/dashboard/status/')
+                    div(class='row')
+                        div(class='col-sm-6')
+                            div(class='form-group row')
+                                label(for="filterInputFrom" class='col-2 col-form-label') von
+                                div(class='col-10')
+                                    input(class='form-control' id='filterInputFrom' name='filterInputFrom' type='date' value=filterInputFrom)
+                            div(class='form-group row')
+                                label(for="filterInputUntil" class='col-2 col-form-label') bis
+                                div(class='col-10')
+                                    input(class='form-control' id='filterInputUntil' name='filterInputUntil' type='date' value=filterInputUntil)
+                        div(class='col-sm-6')
+                            div(class='form-group row')
+                                label(for='filterInputStatus' class='col-2 col-form-label') Status
+                                div(class='col-10')
+                                    select(class='form-control' id='filterInputStatus' name='filterInputStatus')
+                                        option(selected value) all
+                                        option(selected=filterInputStatus=='submitted') submitted
+                                        option(selected=filterInputStatus=='verified') verified
+                                        option(selected=filterInputStatus=='rejected') rejected
+                            div(class='form-group row')
+                                div(class='col-sm-10 offset-sm-2')      
+                                    button(type='submit' class='btn btn-block btn-primary-red mb-2') search ...                        
+                        
+    
     
     div(class='container py-3')
         div(class='row')
-            each item in processItems
-                include partials/process-item.pug
-            else
+            if (processItems.length==0)
                 div(class='col-sm-12')
-                    p Es wurden noch keine Backlinks gesetzt. Erst nachdem Backlinks gesetzt wurden kann der Status hier verfolgt werden.
+                    p Für diese Suche wurden keine Einträge gefunden.
+
+            each item, index in processItems
+                include partials/process-item.pug

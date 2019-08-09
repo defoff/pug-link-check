@@ -9,6 +9,7 @@ interface ProcessItem {
     editUser: string;
     submissionDate: Date;
     submissionUser: string;
+    verificationDate: Date;
 
     status: string;
     targetUrl: string;

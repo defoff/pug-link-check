@@ -1,0 +1,31 @@
+div(class='col-sm-12 py-3')
+    div(class='row')
+        div(class='col-sm-12')
+            span(class='font-weight-bold fg-primary-white')= index + 1
+            br
+            a(href=item.backlinkOriginUrl target='_blank' class='fs__0_8_rem')= item.backlinkOriginUrl
+            br
+            span(class='fs__0_8_rem') Transaktionsnummer: #{item._id}
+
+        div(class='col-md-4 fs__0_8_rem')
+            - function addLeadingZero(n){return n<10? '0'+n:''+n;}
+            span Eingereicht am 
+                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCDate())}.#{addLeadingZero(item.submissionDate.getUTCMonth()+1)}.#{item.submissionDate.getUTCFullYear()}
+                span  um 
+                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCHours())}:#{addLeadingZero(item.submissionDate.getMinutes())}:#{addLeadingZero(item.submissionDate.getSeconds())} 
+            br
+            span Freigegeben am 
+                span(class='font-weight-bold') #{addLeadingZero(item.verificationDate.getUTCDate())}.#{addLeadingZero(item.verificationDate.getUTCMonth()+1)}.#{item.verificationDate.getUTCFullYear()}
+                span  um 
+                span(class='font-weight-bold') #{addLeadingZero(item.verificationDate.getUTCHours())}:#{addLeadingZero(item.verificationDate.getMinutes())}:#{addLeadingZero(item.verificationDate.getSeconds())} 
+        
+        div(class='col-md-4 fs__0_8_rem')   
+            span(class='font-weight-bold') Ziel-URL Backlink: 
+            a(href=item.targetUrl target='_blank')= item.targetUrl
+            br
+        
+        div(class='col-md-4 fs__0_8_rem')
+            if (item.submissionDate)
+                span Gutschrift 
+                span(class='font-weight-bold') 1,00 EUR
+                br

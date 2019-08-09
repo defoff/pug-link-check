@@ -82,7 +82,7 @@ class AdminProcessItemController implements Controller {
         }
         const d = new Date();
         let fromDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-01`;
-        let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate())}`;
+        let untilDate = `${d.getFullYear()}-${this.addLeadingZero(d.getMonth() + 1)}-${this.addLeadingZero(d.getDate() + 1)}`;
         let query = {
             creationDate: {
                 $gt: request.body.filterInputFrom ? new Date(request.body.filterInputFrom) : fromDate,
@@ -172,7 +172,7 @@ class AdminProcessItemController implements Controller {
 
     private verifyProcessItem = (request: flash.Request, response: express.Response) => {
         const id = request.params.id;
-        this.processItems.findByIdAndUpdate({ _id: id }, { status: 'verified' }).then(() => {
+        this.processItems.findByIdAndUpdate({ _id: id }, { status: 'verified', verificationDate: this.createDateAsUTC(new Date()) }).then(() => {
             this.renderArchiveProcessItems(request, response);
         });
     }

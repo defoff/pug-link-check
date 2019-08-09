@@ -1,41 +1,30 @@
 div(class='col-sm-12 py-3')
     div(class='row')
         div(class='col-sm-12 fs__0_8_rem fg-primary-white')
-            include process-item-status-badge.pug
-            span= item._id
+            span(class='font-weight-bold fg-primary-white')= index + 1
+            br
+            a(href=item.backlinkOriginUrl target='_blank' class='fs__0_8_rem')= item.backlinkOriginUrl
+            br
+            span(class='fs__0_8_rem') Transaktionsnummer: #{item._id}
+
         div(class='col-md-4 fs__0_8_rem')
             - function addLeadingZero(n){return n<10? '0'+n:''+n;}
-            span Creation date: 
-            span(class='font-weight-bold') #{addLeadingZero(item.creationDate.getUTCDate())}.#{addLeadingZero(item.creationDate.getUTCMonth())}.#{item.creationDate.getUTCFullYear()}
-            br
-            span Creation time: 
-            span(class='font-weight-bold') #{addLeadingZero(item.creationDate.getUTCHours())}:#{addLeadingZero(item.creationDate.getMinutes())}:#{addLeadingZero(item.creationDate.getSeconds())}
-            br
-            span Current Editor: 
-            span(class='font-weight-bold') #{item.editUser}
-        
+            if(item.submissionDate)
+                span Eingereicht am 
+                    span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCDate())}.#{addLeadingZero(item.submissionDate.getUTCMonth()+1)}.#{item.submissionDate.getUTCFullYear()}
+                    span  um 
+                    span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCHours())}:#{addLeadingZero(item.submissionDate.getMinutes())}:#{addLeadingZero(item.submissionDate.getSeconds())} 
+                br
+            if(item.verificationDate)
+                span Freigegeben am 
+                    span(class='font-weight-bold') #{addLeadingZero(item.verificationDate.getUTCDate())}.#{addLeadingZero(item.verificationDate.getUTCMonth()+1)}.#{item.verificationDate.getUTCFullYear()}
+                    span  um 
+                    span(class='font-weight-bold') #{addLeadingZero(item.verificationDate.getUTCHours())}:#{addLeadingZero(item.verificationDate.getMinutes())}:#{addLeadingZero(item.verificationDate.getSeconds())} 
+                
         div(class='col-md-4 fs__0_8_rem')   
-            if (item.editDate)
-                span Edit date: 
-                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCDate())}.#{addLeadingZero(item.editDate.getUTCMonth())}.#{item.editDate.getUTCFullYear()}
-                br
-                span Edit time: 
-                span(class='font-weight-bold') #{addLeadingZero(item.editDate.getUTCHours())}:#{addLeadingZero(item.editDate.getMinutes())}:#{addLeadingZero(item.editDate.getSeconds())}
-                br
-            span(class='font-weight-bold') TargetURL: 
+            span(class='font-weight-bold') Ziel-URL Backlink: 
             a(href=item.targetUrl target='_blank')= item.targetUrl
             br
-            span(class='font-weight-bold') BacklinkOriginURL: 
-            a(href=item.backlinkOriginUrl target='_blank')= item.backlinkOriginUrl
         
-        div(class='col-md-4 fs__0_8_rem')
-            if (item.submissionDate)
-                span Submission date: 
-                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCDate())}.#{addLeadingZero(item.submissionDate.getUTCMonth())}.#{item.submissionDate.getUTCFullYear()}
-                br
-                span Submission time: 
-                span(class='font-weight-bold') #{addLeadingZero(item.submissionDate.getUTCHours())}:#{addLeadingZero(item.submissionDate.getMinutes())}:#{addLeadingZero(item.submissionDate.getSeconds())}
-                br
-            if (item.submissionUser)
-                span Submitter:
-                span(class='font-weight-bold') #{item.submissionUser}
+        div(class='col-md-4 fs__0_8_rem fg-primary-white')
+            include process-item-status-badge.pug

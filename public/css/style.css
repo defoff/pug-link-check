@@ -32,8 +32,8 @@ a:hover { color: #212529; }
 .fg-primary-red { color: crimson; }
 .fg-custom-gray-light { color: #dee2e6; }
 .bg-custom-gray-light { background: #dee2e6; }
-.fg-custom-gray-dark { color: #818a91; }
-.bg-custom-gray-dark { background: #818a91; }
+.fg-custom-gray-dark { color: #212529;; }
+.bg-custom-gray-dark { background: #212529;; }
 
 /**
 * 2.0 Helper Classes
@@ -72,4 +72,22 @@ a:hover { color: #212529; }
 .btn-primary-white {
   background: white;
   color: #212529;
+}
+
+/**
+* 5.0 Admin Menu
+*/
+#adminMenu {
+  position: fixed;
+  background-color:white;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+}
+#adminMenu a {
+  color: #212529;
+}
+#adminMenu a:hover{
+  color: crimson;
 }

@@ -1,0 +1,20 @@
+extends ../layout.pug
+block content
+    div(class='container py-3')
+
+        if (flashMessageInfo.length > 0)
+            div(class='row')
+                div(class='col-sm-12 py-3')
+                    div(class='alert alert-danger')= flashMessageInfo
+
+        div(class='row')
+            div(class='col-sm-12')
+                h1 Abrechnung: #{fromDate} bis #{untilDate}
+    
+    div(class='container py-3')
+        div(class='row')
+            each item, index in processItems
+                include partials/process-item-transaction.pug
+            else
+                div(class='col-sm-12')
+                    p Es wurden noch keine Backlinks gesetzt. Erst nachdem Backlinks gesetzt wurden kann der Status hier verfolgt werden.
