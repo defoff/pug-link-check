@@ -23,6 +23,13 @@ class AdminUserController implements Controller {
         // ADMIN: ALL USers=====================
         // =====================================
         this.router.get(`${this.path}/users-list/`, isLoggInAsAdmin, this.renderUsersList);
+        this.router.get(`${this.path}/register-new-user/`, isLoggInAsAdmin, this.registerNewUser);
+        this.router.post(`${this.path}/register-new-user/`, isLoggInAsAdmin, passport.authenticate('local-signup', {
+            successRedirect : '/admin/users/users-list/', // redirect to the secure profile section
+            failureRedirect : '/admin/users/users-list/', // redirect back to the signup page if there is an error
+            failureFlash : true, // allow flash messages
+            session: false // prevent auto-login
+        }));
     }
 
     private renderUsersList = (request: flash.Request, response: express.Response) => {
@@ -39,6 +46,20 @@ class AdminUserController implements Controller {
                     }
                 );
             });
+    }
+
+    private registerNewUser = (request: express.Request, response: express.Response) => {
+        request.flash('Fehler: 0x34: Die Aktion konnte nicht durchgeführt werden.');
+        response.render('admin/register-new-user',
+            { 
+                title: 'Userslist',
+                isAuthenticated: request.user ? true : false,
+                isAdmin: request.user.role === 'admin' ? true : false,
+                username: request.user ? request.user.email : '',
+    
+                flashMessage: request.flash('info'),
+            }        
+        );
     }
 }
 

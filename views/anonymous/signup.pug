@@ -1,0 +1,61 @@
+extends ../layout.pug
+block content
+    div(class='container py-3')
+
+        if (flashMessageInfo && flashMessageInfo.length > 0)
+            div(class='row')
+                div(class='col-sm-12 py-3')
+                    div(class='alert alert-danger')= flashMessageInfo
+                    
+        div(class='row')
+            div(class='col-sm-12')
+                h1 Bewerben und Geld verdienen!
+
+    div(class='container py-3')
+        div(class='row')
+            div(class='col-sm-12')
+                form(method='post' action='/signup')
+   
+                    div(class='form-group row')
+                        label(for='inputEmail' class='col-2 col-form-label') E-Mail
+                        div(class='col-10')
+                            input(type='text' class=!validInputEmail ? 'form-control' : 'form-control is-invalid' id='inputEmail' name='inputEmail' value=inputEmail)
+                            div(class='invalid-feedback')
+                                if (flashMessageInputEmail && flashMessageInputEmail.length > 0)
+                                    p= flashMessageInputEmail
+                
+                    div(class='form-group row')
+                        label(for='inputForename' class='col-2 col-form-label') Vorname
+                        div(class='col-10')
+                            input(type='text' class=!validInputForename ? 'form-control' : 'form-control is-invalid' id='inputForename' name='inputForename' value=inputForename)
+                            div(class='invalid-feedback')
+                                if (flashMessageInputForename && flashMessageInputForename.length > 0)
+                                    p= flashMessageInputForename
+
+                    div(class='form-group row')
+                        label(for='inputSurname' class='col-2 col-form-label') Nachname
+                        div(class='col-10')
+                            input(type='text' class=!validInputSurname ? 'form-control' : 'form-control is-invalid' id='inputSurname' name='inputSurname' value=inputSurname)  
+                            div(class='invalid-feedback')
+                                if (flashMessageInputSurname && flashMessageInputSurname.length > 0)
+                                    p= flashMessageInputSurname
+
+                    div(class='form-group row')
+                        label(for='inputLoi' class='col-2 col-form-label') Anschreiben
+                        div(class='col-10')
+                            textarea(class=!validInputLoi ? 'form-control' : 'form-control is-invalid' id='inputLoi' rows='8' name='inputLoi' value=inputLoi)  
+                            div(class='invalid-feedback')
+                                if (flashMessageInputLoi && flashMessageInputLoi.length > 0)
+                                    p= flashMessageInputLoi
+
+                    div(class='form-group row')
+                        label(for="inputBirthdate" class='col-2 col-form-label') Geburtsdatum
+                        div(class='col-10')
+                            input(class=!validInputBirthdate ? 'form-control' : 'form-control is-invalid' id='inputBirthdate' name='inputBirthdate' type='date' value=inputBirthdate)
+                            div(class='invalid-feedback')
+                                if (flashMessageInputBirthdate && flashMessageInputBirthdate.length > 0)
+                                    p= flashMessageInputBirthdate
+
+                    div(class='form-group row')
+                        div(class='col-sm-10 offset-sm-2') 
+                            button(type='submit' class='btn btn-primary-red') Bewerbung einreichen!

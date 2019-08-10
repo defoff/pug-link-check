@@ -1,0 +1,16 @@
+extends ../layout.pug
+block content
+        div(class='container py-3')
+
+            if (flashMessageInfo && flashMessageInfo.length > 0)
+                div(class='row')
+                    div(class='col-sm-12 py-3')
+                        div(class='alert alert-danger')= flashMessageInfo
+
+            if (inputForename && inputEmail)
+                div(class='row')
+                    div(class='col-sm-12')
+                        h1 Bestätige deine eMail-Adresse
+                        p Vielen Dank #{inputForename}, dass du dich für eine Mitarbeit in unserem Team interessierst. Deine Bewerbungsdaten sind auf dem Weg zu unseren Redakteuren.
+                        p Wir haben eine eMail an deine Adresse (#{inputEmail}) gesendet. Schaue in deinem Posteingang (ggf. auch im Spam-Ordner) nach und bestätige deine eMail-Adresse durch "Klick" auf den Link.
+                        
