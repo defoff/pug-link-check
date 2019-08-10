@@ -5,6 +5,7 @@ interface Applicant {
     surname: string;
     loi: string;
     birthdate: Date;
+    verificationToken: string;
     emailConfirmed: boolean;
 }
 
