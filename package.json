@@ -68,6 +68,6 @@
     "pug": "^2.0.3",
     "randomstring": "^1.1.5",
     "request": "^2.88.0",
-    "url-parse": "^1.4.4"
+    "url-parse": "^1.5.8"
   }
 }
